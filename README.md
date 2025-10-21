@@ -1,4 +1,4 @@
-# 🧩 TWO-WAY ENCRYPTED COMMUNICATION  
+#  TWO-WAY ENCRYPTED COMMUNICATION  
 ### Implementasi Client-Server 
 ---
 
@@ -8,7 +8,7 @@
 | **Nama File** | `crypto_communication.py` |
 | **Deskripsi** | Program komunikasi dua arah (client-server)  menggunakan **Caesar**, **Vigenère**, atau **XOR Cipher** |
 | **Bahasa Pemrograman** | Python 3 |
-| **Mode Komunikasi** | Dua arah (bidirectional) |
+| **Mode Komunikasi** | Dua arah (client-server) |
 | **Tipe Koneksi** | Socket TCP |
 | **Default Host** | `127.0.0.1` |
 | **Default Port** | `5555` |
@@ -32,6 +32,17 @@
 | **Non-repudiation** | Riwayat komunikasi bisa direkam/dilihat di terminal |
 ---
 
+## KONFIGURASI TAMBAHAN
+# Pilih cipher yang ingin digunakan
+CIPHER_TYPE = "caesar"  # opsi: "caesar", "vigenere", "xor"
+
+# Ganti shared key jika ingin berbeda
+SHARED_KEY = "SECURITY"
+
+# Ubah alamat dan port jika diperlukan
+HOST = '127.0.0.1'
+PORT = 5555
+
 ##  CARA MENJALANKAN PROGRAM
 ```bash
 1. Pastikan Python 3.x sudah terinstall
@@ -43,14 +54,4 @@
    python crypto_communication.py client
 6. Ketik pesan bolak-balik antara kedua terminal
 7. Ketik 'exit' untuk keluar dari program
-
-## KONFIGURASI TAMBAHAN
-# Pilih cipher yang ingin digunakan
-CIPHER_TYPE = "caesar"  # opsi: "caesar", "vigenere", "xor"
-
-# Ganti shared key jika ingin berbeda
-SHARED_KEY = "SECURITY"
-
-# Ubah alamat dan port jika diperlukan
-HOST = '127.0.0.1'
-PORT = 5555
+```
