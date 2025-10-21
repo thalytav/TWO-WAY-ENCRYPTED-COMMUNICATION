@@ -1,110 +1,56 @@
-# TWO-WAY-ENCRYPTED-COMMUNICATION
-# TWO-WAY ENCRYPTED COMMUNICATION
-
-Program komunikasi dua arah (client-server) dengan enkripsi simetris menggunakan berbagai jenis cipher (Caesar, Vigenère, XOR).
-
+# 🧩 TWO-WAY ENCRYPTED COMMUNICATION  
+### Implementasi Client-Server 
 ---
 
-## 1. PERSIAPAN
+##  INFORMASI UMUM
+| Keterangan | Detail |
+|-------------|---------|
+| **Nama File** | `crypto_communication.py` |
+| **Deskripsi** | Program komunikasi dua arah (client-server)  menggunakan **Caesar**, **Vigenère**, atau **XOR Cipher** |
+| **Bahasa Pemrograman** | Python 3 |
+| **Mode Komunikasi** | Dua arah (bidirectional) |
+| **Tipe Koneksi** | Socket TCP |
+| **Default Host** | `127.0.0.1` |
+| **Default Port** | `5555` |
+| **Shared Key Default** | `SECURITY` |
+---
 
-### 1.1 Instalasi Python
-Pastikan **Python 3.x** sudah terpasang di komputer.  
-- Jika belum, unduh dari [https://www.python.org/downloads/](https://www.python.org/downloads/)
-- Pastikan Python dapat dijalankan melalui Command Prompt atau Terminal.
+##  KONFIGURASI CIPHER
+| Cipher | Jenis | Deskripsi Singkat | Formula / Proses |
+|---------|--------|-------------------|------------------|
+| **Caesar Cipher** | Substitution | Menggeser setiap huruf sejauh 3 posisi | `C = (P + 3) mod 26` |
+| **Vigenère Cipher** | Polyalphabetic | Menggunakan kunci berulang untuk enkripsi | `Ci = (Pi + Ki) mod 26` |
+| **XOR Cipher** | Simulasi Block Cipher | XOR antara plaintext dan key (base64 encoded) | `C = P ⊕ K` |
+---
 
-### 1.2 Instalasi Git (Opsional)
-Jika ingin melakukan clone repository:
-- Unduh Git dari [https://git-scm.com/downloads](https://git-scm.com/downloads)
+##  KEAMANAN YANG DICAPAI
+| Aspek | Deskripsi |
+|--------|------------|
+| **Confidentiality** | Pesan terenkripsi, tidak bisa dibaca pihak ketiga |
+| **Integrity** | Pesan tidak berubah saat transmisi |
+| **Authentication** | Kedua device menggunakan **shared key** yang sama |
+| **Non-repudiation** | Riwayat komunikasi bisa direkam/dilihat di terminal |
+---
 
-### 1.3 Clone Repository
+##  CARA MENJALANKAN PROGRAM
 ```bash
-git clone https://github.com/aqilazn/TWO-WAY-ENCRYPTED-COMMUNICATION.git
-1.4 Masuk ke Direktori Proyek
-bash
-Salin kode
-cd TWO-WAY-ENCRYPTED-COMMUNICATION
-2. MENJALANKAN SERVER (DEVICE 1)
-2.1 Buka Terminal Pertama
-Pastikan sudah berada di dalam folder proyek.
+1. Pastikan Python 3.x sudah terinstall
+2. Simpan file dengan nama crypto_communication.py
+3. Buka 2 terminal (CMD / PowerShell / Terminal Linux)
+4. Jalankan server di terminal pertama:
+   python crypto_communication.py server
+5. Jalankan client di terminal kedua:
+   python crypto_communication.py client
+6. Ketik pesan bolak-balik antara kedua terminal
+7. Ketik 'exit' untuk keluar dari program
 
-2.2 Jalankan Server
-bash
-Salin kode
-python crypto_communication.py server
-2.3 Contoh Output
-markdown
-Salin kode
-============================================================
-SERVER (DEVICE 1) STARTED
-Listening on 127.0.0.1:5555
-Shared Key: SECRETKEY
-Cipher Type: VIGENERE
-============================================================
-3. MENJALANKAN CLIENT (DEVICE 2)
-3.1 Buka Terminal Kedua
-Buka terminal baru di lokasi yang sama.
+## KONFIGURASI TAMBAHAN
+# Pilih cipher yang ingin digunakan
+CIPHER_TYPE = "caesar"  # opsi: "caesar", "vigenere", "xor"
 
-3.2 Jalankan Client
-bash
-Salin kode
-python crypto_communication.py client
-3.3 Contoh Output
-vbnet
-Salin kode
-============================================================
-CLIENT (DEVICE 2) STARTED
-Connecting to 127.0.0.1:5555
-Shared Key: SECRETKEY
-Cipher Type: VIGENERE
-============================================================
-Connected to server
-4. KOMUNIKASI DUA ARAH
-4.1 Contoh: Server Mengirim ke Client
-Terminal 1 (Server):
+# Ganti shared key jika ingin berbeda
+SHARED_KEY = "SECURITY"
 
-pgsql
-Salin kode
-Type message to send: Hello from Device 1
-ENCRYPTED: DITSYJVCKQHGMEZI
-Sent to client
-Terminal 2 (Client):
-
-pgsql
-Salin kode
-RECEIVED (Encrypted): DITSYJVCKQHGMEZI
-DECRYPTED: HELLOFROMDEVICE
-------------------------------------------------------------
-4.2 Contoh: Client Mengirim ke Server
-Terminal 2 (Client):
-
-pgsql
-Salin kode
-Type message to send: Hi Device 1, message received
-ENCRYPTED: DESPWGMLIRQWEKMGXMZMGML
-Sent to server
-Terminal 1 (Server):
-
-pgsql
-Salin kode
-RECEIVED (Encrypted): DESPWGMLIRQWEKMGXMZMGML
-DECRYPTED: HIDEVICEMESSAGERECEIVED
-------------------------------------------------------------
-5. KONFIGURASI CIPHER
-5.1 Pengaturan Cipher
-Edit bagian berikut di dalam file crypto_communication.py:
-
-python
-Salin kode
-CIPHER_TYPE = "vigenere"  # Pilihan: "caesar", "vigenere", "xor"
-SHARED_KEY = "SECRETKEY"  # Ganti sesuai kebutuhan
-5.2 Pilihan Cipher
-Jenis Cipher	Deskripsi
-caesar	Cipher klasik dengan pergeseran 3 karakter
-vigenere	Cipher berbasis kata kunci (polyalphabetic)
-xor	Cipher berbasis operasi XOR sederhana (ECB mode)
-
-6. TROUBLESHOOTING
-Masalah	Penyebab	Solusi
-Address already in use	Port 5555 masih digunakan	Tutup terminal sebelumnya atau tunggu ±30 detik
-Connection refused	Server belum dijalankan	Jalankan server terlebih dahulu sebelum client
-Module not found	Modul Python tidak ditemukan	Semua modul sudah bawaan Python, tidak perlu instalasi tambahan
+# Ubah alamat dan port jika diperlukan
+HOST = '127.0.0.1'
+PORT = 5555
