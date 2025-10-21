@@ -7,14 +7,14 @@ import socket
 import threading
 import base64
 
-# ============ SHARED KEY (diketahui kedua device) ============
-SHARED_KEY = "SECRETKEY"
+# ============ SHARED KEY ============
+SHARED_KEY = "SECURITY"
 HOST = '127.0.0.1'
 PORT = 5555
 
-# ============================================
-# CIPHER IMPLEMENTATIONS (Sesuai Materi)
-# ============================================
+# =======================
+# CIPHER IMPLEMENTATIONS 
+# =======================
 
 # 1. CAESAR CIPHER 
 def caesar_encrypt(text, shift=3):
@@ -64,7 +64,7 @@ def vigenere_decrypt(ciphertext, key):
 
 # 3. SIMPLE XOR CIPHER (simulating block cipher)
 def xor_encrypt(plaintext, key):
-    """Encrypt menggunakan XOR (ECB Mode - KI 04 Slide 5-7)"""
+    """Encrypt menggunakan XOR"""
     result = []
     for i in range(len(plaintext)):
         result.append(ord(plaintext[i]) ^ ord(key[i % len(key)]))
@@ -82,10 +82,10 @@ def xor_decrypt(ciphertext, key):
         return "[ERROR DECRYPTING]"
 
 
-# ============================================
+# ============================
 # PILIH CIPHER YANG DIGUNAKAN
-# ============================================
-CIPHER_TYPE = "vigenere"  # Ganti: "caesar", "vigenere", atau "xor"
+# ============================
+CIPHER_TYPE = "caesar"  # Ganti: "caesar", "vigenere", atau "xor"
 
 def encrypt_message(message):
     """Encrypt message berdasarkan cipher yang dipilih"""
@@ -108,9 +108,9 @@ def decrypt_message(encrypted):
     return encrypted
 
 
-# ============================================
-# SERVER CODE (Device 1)
-# ============================================
+# ===================
+# SERVER (Device 1)
+# ===================
 def start_server():
     """Server - Device 1 yang menerima dan mengirim pesan"""
     server = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
@@ -119,14 +119,14 @@ def start_server():
     server.listen(1)
     
     print("="*60)
-    print("🟢 SERVER (DEVICE 1) STARTED")
+    print(" SERVER (DEVICE 1) STARTED")
     print(f"   Listening on {HOST}:{PORT}")
     print(f"   Shared Key: {SHARED_KEY}")
     print(f"   Cipher Type: {CIPHER_TYPE.upper()}")
     print("="*60)
     
     conn, addr = server.accept()
-    print(f"✅ Client connected from {addr}\n")
+    print(f" Client connected from {addr}\n")
     
     # Thread untuk menerima pesan
     def receive_messages():
@@ -136,9 +136,9 @@ def start_server():
                 if not encrypted:
                     break
                 
-                print(f"\n📨 RECEIVED (Encrypted): {encrypted}")
+                print(f"\n RECEIVED (Encrypted): {encrypted}")
                 decrypted = decrypt_message(encrypted)
-                print(f"🔓 DECRYPTED: {decrypted}")
+                print(f" DECRYPTED: {decrypted}")
                 print("-" * 60)
             except:
                 break
@@ -147,14 +147,14 @@ def start_server():
     def send_messages():
         while True:
             try:
-                message = input("📤 Type message to send: ")
+                message = input(" Type message to send: ")
                 if message.lower() == 'exit':
                     break
                 
                 encrypted = encrypt_message(message)
-                print(f"🔒 ENCRYPTED: {encrypted}")
+                print(f" ENCRYPTED: {encrypted}")
                 conn.send(encrypted.encode())
-                print(f"✅ Sent to client\n")
+                print(f" Sent to client\n")
             except:
                 break
     
@@ -171,15 +171,15 @@ def start_server():
     server.close()
 
 
-# ============================================
-# CLIENT CODE (Device 2)
-# ============================================
+# ==================
+# CLIENT (Device 2)
+# ==================
 def start_client():
     """Client - Device 2 yang mengirim dan menerima pesan"""
     client = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
     
     print("="*60)
-    print("🔵 CLIENT (DEVICE 2) STARTED")
+    print(" CLIENT (DEVICE 2) STARTED")
     print(f"   Connecting to {HOST}:{PORT}")
     print(f"   Shared Key: {SHARED_KEY}")
     print(f"   Cipher Type: {CIPHER_TYPE.upper()}")
@@ -187,9 +187,9 @@ def start_client():
     
     try:
         client.connect((HOST, PORT))
-        print("✅ Connected to server\n")
+        print(" Connected to server\n")
     except:
-        print("❌ Failed to connect to server!")
+        print(" Failed to connect to server!")
         return
     
     # Thread untuk menerima pesan
@@ -200,9 +200,9 @@ def start_client():
                 if not encrypted:
                     break
                 
-                print(f"\n📨 RECEIVED (Encrypted): {encrypted}")
+                print(f"\n RECEIVED (Encrypted): {encrypted}")
                 decrypted = decrypt_message(encrypted)
-                print(f"🔓 DECRYPTED: {decrypted}")
+                print(f" DECRYPTED: {decrypted}")
                 print("-" * 60)
             except:
                 break
@@ -211,14 +211,14 @@ def start_client():
     def send_messages():
         while True:
             try:
-                message = input("📤 Type message to send: ")
+                message = input(" Type message to send: ")
                 if message.lower() == 'exit':
                     break
                 
                 encrypted = encrypt_message(message)
-                print(f"🔒 ENCRYPTED: {encrypted}")
+                print(f" ENCRYPTED: {encrypted}")
                 client.send(encrypted.encode())
-                print(f"✅ Sent to server\n")
+                print(f" Sent to server\n")
             except:
                 break
     
@@ -234,18 +234,18 @@ def start_client():
     client.close()
 
 
-# ============================================
+# ==============
 # MAIN PROGRAM
-# ============================================
+# ==============
 if __name__ == "__main__":
     print("\n" + "="*60)
     print("  TWO-WAY ENCRYPTED COMMUNICATION SYSTEM")
     print("  Implementasi Materi KI 01-04")
     print("="*60)
-    print("\n⚙️  CONFIGURATION:")
+    print("\n  CONFIGURATION:")
     print(f"   Shared Key: {SHARED_KEY}")
     print(f"   Cipher: {CIPHER_TYPE.upper()}")
-    print("\n📝 CARA MENJALANKAN:")
+    print("\n CARA MENJALANKAN:")
     print("   1. Buka 2 terminal/command prompt")
     print("   2. Terminal 1: python script.py server")
     print("   3. Terminal 2: python script.py client")
@@ -256,7 +256,7 @@ if __name__ == "__main__":
     import sys
     
     if len(sys.argv) < 2:
-        print("❌ Usage: python script.py [server|client]")
+        print(" Usage: python script.py [server|client]")
         print("   Example: python script.py server")
         print("            python script.py client")
     elif sys.argv[1].lower() == 'server':
@@ -264,39 +264,35 @@ if __name__ == "__main__":
     elif sys.argv[1].lower() == 'client':
         start_client()
     else:
-        print("❌ Invalid argument. Use 'server' or 'client'")
+        print("Invalid argument. Use 'server' or 'client'")
 
 
 # ============================================
 # PENJELASAN CIPHER 
 # ============================================
 """
-1. CAESAR CIPHER (KI 01 - Slide 37-38):
+1. CAESAR CIPHER:
    - Substitution cipher sederhana
-   - Shift setiap huruf 3 posisi (A→D, B→E, dst)
+   - Shift setiap huruf 3 posisi (A ke D, B ke E, dst)
    - Formula: C = (P + 3) mod 26
    - Kelemahan: Hanya 26 kemungkinan (brute force mudah)
 
-2. VIGENERE CIPHER (KI 02 - Slide 52-53):
+2. VIGENERE CIPHER:
    - Polyalphabetic substitution cipher
    - Menggunakan keyword yang diulang
    - Lebih aman dari Caesar karena multiple alphabets
    - Formula: Ci = (Pi + Ki) mod 26
    - Dapat diserang dengan Kasiski method
 
-3. XOR CIPHER (KI 04 - Slide 5-7):
+3. XOR CIPHER:
    - Simulasi modern block cipher
    - Menggunakan ECB mode (Electronic Codebook)
    - Operasi XOR antara plaintext dan key
    - Base64 encoding untuk transmission
 
-SECURITY PROPERTIES (KI 01 - Slide 17-19):
-✅ Confidentiality: Data tidak terlihat oleh pihak tidak berwenang
-✅ Integrity: Data tidak berubah saat transmisi
-✅ Authentication: Kedua device menggunakan shared key yang sama
-✅ Non-repudiation: History komunikasi tercatat
-
-MODES OF OPERATION (KI 04):
-- ECB: Electronic Codebook (independent blocks)
-- Bisa dikembangkan ke CBC, CFB, OFB, CTR
+SECURITY PROPERTIES:
+Confidentiality: Data tidak terlihat oleh pihak tidak berwenang
+Integrity: Data tidak berubah saat transmisi
+Authentication: Kedua device menggunakan shared key yang sama
+Non-repudiation: History komunikasi tercatat
 """
