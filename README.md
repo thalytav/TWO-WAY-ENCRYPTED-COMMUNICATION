@@ -33,6 +33,7 @@
 ---
 
 ## KONFIGURASI TAMBAHAN
+```bash
 # Pilih cipher yang ingin digunakan
 CIPHER_TYPE = "caesar"  # opsi: "caesar", "vigenere", "xor"
 
@@ -42,6 +43,7 @@ SHARED_KEY = "SECURITY"
 # Ubah alamat dan port jika diperlukan
 HOST = '127.0.0.1'
 PORT = 5555
+```
 
 ##  CARA MENJALANKAN PROGRAM
 ```bash
